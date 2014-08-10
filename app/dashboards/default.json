@@ -1,15 +1,20 @@
 {
-  "title": "Grafana",
-  "tags": [],
-  "style": "dark",
-  "timezone": "browser",
-  "editable": true,
+  "title": "Welcome to Grafana!",
+  "services": {
+    "filter": {
+      "list": [],
+      "time": {
+        "from": "now-15m",
+        "to": "now"
+      }
+    }
+  },
   "rows": [
     {
-      "title": "New row",
+      "title": "Welcome to Grafana",
       "height": "150px",
       "editable": true,
-      "collapse": false,
+      "collapse": true,
       "collapsable": true,
       "panels": [
         {
@@ -17,56 +22,28 @@
           "span": 12,
           "editable": true,
           "type": "text",
-          "mode": "html",
-          "content": "<div class=\"text-center\" style=\"padding-top: 15px\">\n<img src=\"http://grafana.org/assets/img/logo_transparent_200x75.png\"> \n</div>",
-          "style": {},
-          "title": "Welcome to"
-        }
-      ],
-      "notice": false
-    },
-    {
-      "title": "Welcome to Grafana",
-      "height": "210px",
-      "editable": true,
-      "collapse": false,
-      "collapsable": true,
-      "panels": [
-        {
-          "error": false,
-          "span": 6,
-          "editable": true,
-          "type": "text",
           "loadingEditor": false,
-          "mode": "html",
-          "content": "<br/>\n\n<div class=\"row-fluid\">\n  <div class=\"span6\">\n    <ul>\n      <li>\n        <a href=\"http://grafana.org/docs#configuration\" target=\"_blank\">Configuration</a>\n      </li>\n      <li>\n        <a href=\"http://grafana.org/docs/troubleshooting\" target=\"_blank\">Troubleshooting</a>\n      </li>\n      <li>\n        <a href=\"http://grafana.org/docs/support\" target=\"_blank\">Support</a>\n      </li>\n      <li>\n        <a href=\"http://grafana.org/docs/features/intro\" target=\"_blank\">Getting started</a>  (Must read!)\n      </li>\n    </ul>\n  </div>\n  <div class=\"span6\">\n    <ul>\n      <li>\n        <a href=\"http://grafana.org/docs/features/graphing\" target=\"_blank\">Graphing</a>\n      </li>\n      <li>\n        <a href=\"http://grafana.org/docs/features/annotations\" target=\"_blank\">Annotations</a>\n      </li>\n      <li>\n        <a href=\"http://grafana.org/docs/features/graphite\" target=\"_blank\">Graphite</a>\n      </li>\n      <li>\n        <a href=\"http://grafana.org/docs/features/influxdb\" target=\"_blank\">InfluxDB</a>\n      </li>\n      <li>\n        <a href=\"http://grafana.org/docs/features/opentsdb\" target=\"_blank\">OpenTSDB</a>\n      </li>\n    </ul>\n  </div>\n</div>",
+          "mode": "markdown",
+          "content": "####Thank you for trying out Grafana! \n\nGeneral documentation is found in the readme and in the wiki section of the [Github Project](https://github.com/torkelo/grafana). If you encounter any problem or have an idea for an improvement do not hesitate to open a github issue. \n\nTips: \n\n- Ctrl+S saves the current dashboard\n- Ctrl+F Opens the dashboard finder (searches elastic search)\n- Ctrl+H Hide/show row controls \n- Click and drag graph title to move panel (only works when row controls are enabled)\n\nIf you do not see a graph in the panel below the browser cannot access your graphite installation. Please make sure that datasources property in config.js is correctly set and that any urls accessible from your browser.",
           "style": {},
-          "title": "Documentation Links"
-        },
-        {
-          "error": false,
-          "span": 6,
-          "editable": true,
-          "type": "text",
-          "mode": "html",
-          "content": "<br/>\n\n<div class=\"row-fluid\">\n  <div class=\"span12\">\n    <ul>\n      <li>Ctrl+S saves the current dashboard</li>\n      <li>Ctrl+F Opens the dashboard finder</li>\n      <li>Ctrl+H Hide/show row controls</li>\n      <li>Click and drag graph title to move panel</li>\n      <li>Hit Escape to exit graph when in fullscreen or edit mode</li>\n      <li>Click the colored icon in the legend to change series color</li>\n      <li>Ctrl or Shift + Click legend name to hide other series</li>\n    </ul>\n  </div>\n</div>\n",
-          "style": {},
-          "title": "Tips & Shortcuts"
+          "title": "Welcome to Grafana"
         }
       ],
       "notice": false
     },
     {
-      "title": "test",
+      "title": "New row",
       "height": "250px",
       "editable": true,
       "collapse": false,
       "collapsable": true,
       "panels": [
         {
-          "span": 12,
+          "span": 4,
           "editable": true,
           "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
           "x-axis": true,
           "y-axis": true,
           "scale": 1,
@@ -75,8 +52,6 @@
             "short"
           ],
           "grid": {
-            "max": null,
-            "min": null,
             "leftMax": null,
             "rightMax": null,
             "leftMin": null,
@@ -86,16 +61,17 @@
             "threshold1Color": "rgba(216, 200, 27, 0.27)",
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
+          "annotate": {
+            "enable": false
+          },
           "resolution": 100,
           "lines": true,
-          "fill": 1,
-          "linewidth": 2,
+          "fill": 0,
+          "linewidth": 1,
           "points": false,
           "pointradius": 5,
           "bars": false,
-          "stack": true,
-          "spyable": true,
-          "options": false,
+          "stack": false,
           "legend": {
             "show": true,
             "values": false,
@@ -105,9 +81,6 @@
             "total": false,
             "avg": false
           },
-          "interactive": true,
-          "legend_counts": true,
-          "timezone": "browser",
           "percentage": false,
           "zerofill": true,
           "nullPointMode": "connected",
@@ -118,24 +91,150 @@
           },
           "targets": [
             {
-              "target": "randomWalk('random walk')",
               "function": "mean",
-              "column": "value"
+              "column": "cpu_user_utilization_percent",
+              "series": "newrelic_metrics",
+              "query": "select  mean(cpu_user_utilization_percent) from \"newrelic_metrics\" where  time > now() - 15m     group by time(1s)  order asc"
             }
           ],
           "aliasColors": {},
           "aliasYAxis": {},
-          "title": "First Graph (click title to edit)",
-          "datasource": "graphite",
+          "title": "www.basicruby.com CPU %"
+        },
+        {
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
           "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "bytes",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
           "annotate": {
             "enable": false
-          }
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "log_data_transfer_used",
+              "series": "papertrail_usage",
+              "query": "select  mean(log_data_transfer_used) from \"papertrail_usage\" where  time > now() - 15m     group by time(1s)  order asc"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "Papertrail usage"
+        },
+        {
+          "span": 4,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "s",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "annotate": {
+            "enable": false
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 0,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "response_time",
+              "series": "newrelic_stats",
+              "query": "select  mean(response_time) from \"newrelic_stats\" where  time > now() - 15m     group by time(1s)  order asc"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "www.basicruby.com response time"
         }
       ],
       "notice": false
     }
   ],
+  "editable": true,
+  "failover": false,
+  "panel_hints": true,
+  "style": "dark",
   "pulldowns": [
     {
       "type": "filtering",
@@ -181,12 +280,22 @@
       "now": true
     }
   ],
-  "time": {
-    "from": "now-6h",
-    "to": "now"
+  "loader": {
+    "save_gist": false,
+    "save_elasticsearch": true,
+    "save_local": true,
+    "save_default": true,
+    "save_temp": true,
+    "save_temp_ttl_enable": true,
+    "save_temp_ttl": "30d",
+    "load_gist": false,
+    "load_elasticsearch": true,
+    "load_elasticsearch_size": 20,
+    "load_local": false,
+    "hide": false
   },
-  "templating": {
-    "list": []
-  },
-  "version": 2
+  "refresh": false,
+  "tags": [],
+  "timezone": "browser",
+  "hideControls": false
 }
